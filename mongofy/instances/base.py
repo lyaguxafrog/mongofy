@@ -18,6 +18,7 @@ class BaseMongofy(ABC):
         port: Optional[int] = None,
         user: Optional[str] = None,
         password: Optional[str] = None,
+        db_name: str = "db",
     ) -> None:
         """Init mongo connection.
 
@@ -27,6 +28,7 @@ class BaseMongofy(ABC):
             port (int | None): Mongodb port
             user (str | None): Mongo user if needed
             password (str | None): Mongo password if needed
+            db_name (str): Database name
         """
         raise NotImplementedError
 
