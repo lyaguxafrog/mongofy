@@ -8,3 +8,38 @@ authors = [
 ]
 requires-python = ">=3.9"
 dependencies = []
+
+[dependency-groups]
+dev = [
+    "icecream>=2.1.8",
+    "mkdocs>=1.6.1",
+    "mkdocstrings>=0.30.1",
+    "mkdocstrings-python>=1.18.2",
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+    "ruff>=0.13.3",
+]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 80
+exclude = ["*__init__.py", "tests/", "*exceptions/"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.ruff.lint]
+extend-select = ["UP", "D"]
+ignore = ["UP009", "D100"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+known-first-party = ["mongofy"]
+lines-after-imports = 2
+lines-between-types = 1
+combine-as-imports = true
+force-wrap-aliases = true
