@@ -3,7 +3,3 @@ copyright: 2025 © Adrian Makridenko
 
 nav:
   - Home: index.md
-
-
-theme:
-  name: readthedocs
