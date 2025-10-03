@@ -3,42 +3,37 @@
 from typing import Optional
 from abc import abstractmethod, ABC
 
-from pymongo import MongoClient
-
 from mongofy.exceptions import BuildClientError
 
 
 class BaseMongofy(ABC):
     """Base Mongofy instance."""
 
-    def __init__(
-        self,
+    @classmethod
+    @abstractmethod
+    def init(
+        cls,
         uri: Optional[str] = None,
         host: Optional[str] = None,
         port: Optional[int] = None,
         user: Optional[str] = None,
         password: Optional[str] = None,
-        client: Optional[MongoClient] = None,
     ) -> None:
-        """Constructor.
+        """Init mongo connection.
 
         Args:
-            uri (str | None): URI to your mongo
-            host (str | None): Host
-            port (int | None): Mongo port
-            user (str | None): User if needed
-            password (str | None): Password id needed
-            client (MongoClient | None): Pymongo client
-
-        Raises:
-            BuildClientError: If error while setup
+            uri (str | None): URI to connection
+            host (str | None): Mongodb host
+            port (int | None): Mongodb port
+            user (str | None): Mongo user if needed
+            password (str | None): Mongo password if needed
         """
-        if not client:
-            _uri = uri if uri else self._uri_builder(host, port, user, password)  # type: ignore
-        elif client:
-            self.__client = client
-        else:
-            raise BuildClientError("Please, setup your mongo connection!")
+        raise NotImplementedError
+
+    @abstractmethod
+    def close(self) -> None:
+        """Close connection."""
+        raise NotImplementedError
 
     @staticmethod
     def _uri_builder(
@@ -66,13 +61,3 @@ class BaseMongofy(ABC):
             )
         else:
             return f"mongodb://{user}:{password}@{host}:{port}"
-
-    @abstractmethod
-    def init(self) -> None:
-        """Init connection scope."""
-        raise NotImplementedError
-
-    @abstractmethod
-    def close(self) -> None:
-        """Close connection scope."""
-        raise NotImplementedError
