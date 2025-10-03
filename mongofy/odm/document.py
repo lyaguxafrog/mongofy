@@ -2,10 +2,9 @@
 
 from __future__ import annotations
 
-from typing import TypeVar
+from typing import TypeVar, Optional
 from bson import ObjectId
 import msgspec
-from mkdocs.config.config_options import Optional
 from msgspec import Struct
 from msgspec.json import Encoder
 
@@ -50,4 +49,5 @@ class Document(Struct):
         Returns:
             Optional[DocumentType]: Document if exist
         """
-        return Mongofy.get_db()["DEV"].find_one(query)
+        qs = Mongofy.get_db()["DEV"].find_one(query)
+        return cls(**qs) if qs else None

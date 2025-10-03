@@ -29,7 +29,6 @@ Repository = "https://github.com/lyaguxafrog/mongofy"
 [tool.ruff]
 target-version = "py39"
 line-length = 80
-ignore = ["UP007"]
 exclude = ["*__init__.py", "tests/", "*exceptions/"]
 
 [tool.ruff.format]
@@ -39,7 +38,7 @@ line-ending = "auto"
 
 [tool.ruff.lint]
 extend-select = ["UP", "D"]
-ignore = ["UP009", "D100"]
+ignore = ["UP009", "UP007", "D100"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
