@@ -1,0 +1,10 @@
+[project]
+name = "mongofy"
+version = "0.1.0a1"
+description = "MongoDB ODM. ALPHA VERSION - DO NOT USE"
+readme = "README.md"
+authors = [
+    { name = "Adrian Makridenko", email = "adrianmakridenko@duck.com" }
+]
+requires-python = ">=3.9"
+dependencies = []
