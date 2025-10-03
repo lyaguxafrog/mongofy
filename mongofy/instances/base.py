@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import Any
+from typing import Any, Optional
 from abc import abstractmethod, ABC
 
 from mongofy.exceptions import BuildClientError
@@ -13,11 +13,11 @@ class BaseMongofy(ABC):
     @abstractmethod
     def init(
         cls,
-        uri: str | None = None,
-        host: str | None = None,
-        port: int | None = None,
-        user: str | None = None,
-        password: str | None = None,
+        uri: Optional[str] = None,
+        host: Optional[str] = None,
+        port: Optional[int] = None,
+        user: Optional[str] = None,
+        password: Optional[str] = None,
         db_name: str = "db",
     ) -> None:
         """Init mongo connection.
@@ -45,7 +45,7 @@ class BaseMongofy(ABC):
 
     @staticmethod
     def _uri_builder(
-        host: str, port: int, user: str | None, password: str | None
+        host: str, port: int, user: Optional[str], password: Optional[str]
     ) -> str:
         """Build base mongo db uri.
 

@@ -50,4 +50,4 @@ class Document(Struct):
         Returns:
             Optional[DocumentType]: Document if exist
         """
-        return cls(**Mongofy.get_db()["DEV"].find_one(query))
+        return Mongofy.get_db()["DEV"].find_one(query)
