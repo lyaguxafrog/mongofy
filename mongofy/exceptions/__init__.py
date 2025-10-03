@@ -2,9 +2,10 @@
 
 """All Mongofy exceptions."""
 
-from .instance import BuildClientError
+from .instance import BuildClientError, MongoConnectionError
 
 
 __all__ = [
-    "BuildClientError"
+    "BuildClientError",
+    "MongoConnectionError"
 ]

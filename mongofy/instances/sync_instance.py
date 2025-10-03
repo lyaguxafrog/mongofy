@@ -3,17 +3,17 @@
 from typing import Optional
 
 from pymongo import MongoClient
-from pymongo.collection import Collection
+from pymongo.database import Database
 
 from mongofy.instances.base import BaseMongofy
-from mongofy.exceptions import BuildClientError
+from mongofy.exceptions import BuildClientError, MongoConnectionError
 
 
 class Mongofy(BaseMongofy):
     """Main Mongofy instance."""
 
     _client: Optional[MongoClient] = None
-    _db: Optional[Collection] = None
+    _db: Optional[Database] = None
 
     @classmethod
     def init(
@@ -44,6 +44,20 @@ class Mongofy(BaseMongofy):
             raise BuildClientError(f"Error while building client: {uri}")
 
         cls._db = cls._client[db_name]
+
+    @classmethod
+    def get_db(cls) -> Database:
+        """Get current db.
+
+        Returns:
+            Database: Current database
+
+        Raises:
+            MongoConnectionError: If mongodb not initialized
+        """
+        if cls._db is None:
+            raise MongoConnectionError("MongoDB not initialized.")
+        return cls._db
 
     def close(self) -> None:
         """Close mongo connection."""

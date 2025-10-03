@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import Optional
+from typing import Optional, Any
 from abc import abstractmethod, ABC
 
 from mongofy.exceptions import BuildClientError
@@ -35,6 +35,12 @@ class BaseMongofy(ABC):
     @abstractmethod
     def close(self) -> None:
         """Close connection."""
+        raise NotImplementedError
+
+    @classmethod
+    @abstractmethod
+    def get_db(cls) -> Any:
+        """DB Getter."""
         raise NotImplementedError
 
     @staticmethod
