@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from typing import Optional
 
 from pymongo import MongoClient
 from pymongo.database import Database
@@ -12,17 +11,17 @@ from mongofy.exceptions import BuildClientError, MongoConnectionError
 class Mongofy(BaseMongofy):
     """Main Mongofy instance."""
 
-    _client: Optional[MongoClient] = None
-    _db: Optional[Database] = None
+    _client: MongoClient | None = None
+    _db: Database | None = None
 
     @classmethod
     def init(
         cls,
-        uri: Optional[str] = None,
-        host: Optional[str] = None,
-        port: Optional[int] = None,
-        user: Optional[str] = None,
-        password: Optional[str] = None,
+        uri: str | None = None,
+        host: str | None = None,
+        port: int | None = None,
+        user: str | None = None,
+        password: str | None = None,
         db_name: str = "db",
     ) -> None:
         """Init mongo connection.
