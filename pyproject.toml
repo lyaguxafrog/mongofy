@@ -1,6 +1,6 @@
 [project]
 name = "mongofy"
-version = "0.1.0a1"
+version = "0.1.0a2"
 description = "MongoDB ODM. ALPHA VERSION - DO NOT USE"
 readme = "README.md"
 authors = [
@@ -23,6 +23,9 @@ dev = [
     "pytest-asyncio>=1.2.0",
     "ruff>=0.13.3",
 ]
+
+[project.urls]
+Repository = "https://github.com/lyaguxafrog/mongofy"
 
 [tool.ruff]
 target-version = "py39"
