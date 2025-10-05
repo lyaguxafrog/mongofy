@@ -10,6 +10,7 @@ from msgspec.json import Encoder
 
 from mongofy.instances.sync_instance import Mongofy
 from mongofy.odm.encoder import encoder
+from mongofy.odm.cursor import Cursor
 
 
 encoder = Encoder(enc_hook=encoder)
@@ -28,7 +29,7 @@ class Document(Struct):
         """Get model ID."""
         return self._id
 
-    def save(self) -> DocumentType:
+    def save(self: DocumentType) -> DocumentType:
         """Save document and return self."""
         data = msgspec.to_builtins(self)
 
@@ -40,7 +41,7 @@ class Document(Struct):
         return self
 
     @classmethod
-    def find_one(cls, **query) -> Optional[DocumentType]:
+    def find_one(cls: type[DocumentType], **query) -> Optional[DocumentType]:
         """Find one document.
 
         Args:
@@ -51,3 +52,13 @@ class Document(Struct):
         """
         qs = Mongofy.get_db()["DEV"].find_one(query)
         return cls(**qs) if qs else None
+
+    @classmethod
+    def find(cls: type[DocumentType], **query) -> Cursor:
+        """Find something in MongoDB.
+
+        Returns:
+            Cursor: Cursor with finding data
+        """
+        raw = list(Mongofy.get_db()["DEV"].find(query))
+        return Cursor(cls, raw)
