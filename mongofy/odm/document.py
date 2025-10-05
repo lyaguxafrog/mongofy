@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TypeVar, Optional
+from typing import Optional
 from bson import ObjectId
 import msgspec
 from msgspec import Struct
@@ -11,18 +11,27 @@ from msgspec.json import Encoder
 from mongofy.instances.sync_instance import Mongofy
 from mongofy.odm.encoder import encoder
 from mongofy.odm.cursor import Cursor
+from mongofy.__types__ import DocumentType
 
 
 encoder = Encoder(enc_hook=encoder)
-
-
-DocumentType = TypeVar("DocumentType", bound="Document")
 
 
 class Document(Struct):
     """Base document class."""
 
     _id: Optional[ObjectId] = None
+
+    class Meta:
+        """Document settings."""
+
+        collection: Optional[str] = None
+
+    @classmethod
+    def _collection_name(cls) -> str:
+        if hasattr(cls, "Meta") and getattr(cls.Meta, "collection", None):
+            return cls.Meta.collection
+        return cls.__name__.lower()
 
     @property
     def id(self) -> ObjectId:
@@ -36,7 +45,7 @@ class Document(Struct):
         if "_id" in data:
             data.pop("_id")
 
-        result = Mongofy.get_db()["DEV"].insert_one(data)
+        result = Mongofy.get_db()[self._collection_name()].insert_one(data)
         self._id = result.inserted_id
         return self
 
@@ -50,7 +59,7 @@ class Document(Struct):
         Returns:
             Optional[DocumentType]: Document if exist
         """
-        qs = Mongofy.get_db()["DEV"].find_one(query)
+        qs = Mongofy.get_db()[cls._collection_name()].find_one(query)
         return cls(**qs) if qs else None
 
     @classmethod
@@ -60,5 +69,5 @@ class Document(Struct):
         Returns:
             Cursor: Cursor with finding data
         """
-        raw = list(Mongofy.get_db()["DEV"].find(query))
+        raw = list(Mongofy.get_db()[cls._collection_name()].find(query))
         return Cursor(cls, raw)

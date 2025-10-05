@@ -3,7 +3,7 @@
 from abc import ABC, abstractmethod
 from typing import Generic, Any
 
-from mongofy.odm.document import DocumentType
+from mongofy.__types__ import DocumentType
 
 
 class BaseCursor(ABC, Generic[DocumentType]):

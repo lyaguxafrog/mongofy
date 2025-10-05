@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from mongofy.odm.cursor.base_cursor import BaseCursor
-from mongofy.odm.document import DocumentType
+from mongofy.__types__ import DocumentType
 
 
 class Cursor(BaseCursor):
