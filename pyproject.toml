@@ -1,6 +1,6 @@
 [project]
 name = "mongofy"
-version = "0.1.0a2"
+version = "0.1.0a3"
 description = "MongoDB ODM. ALPHA VERSION - DO NOT USE"
 readme = "README.md"
 authors = [

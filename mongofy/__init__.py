@@ -7,6 +7,7 @@ IN DEVELOP
 """
 
 from .instances.sync_instance import Mongofy
+from .odm.document import Document
 
-__version__ = "0.1.0a2"
-__all__ = ["Mongofy"]
+__version__ = "DEV"
+__all__ = ["Mongofy", "Document"]
